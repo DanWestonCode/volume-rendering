@@ -78,7 +78,7 @@ float4 RayCastPS(PSInput input) : SV_TARGET
 	{
 		// sample the texture accumlating the result as we step through the texture
 		float2 src = txVolume.Sample(samplerLinear, v).rr;
-		src.y *= .5f;
+		src.y *= .05f;
 
 		// Front to back blending
 		result += (1 - result.y)*src.y * src;
