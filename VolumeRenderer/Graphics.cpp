@@ -79,8 +79,10 @@ bool Graphics::Render(float dt)
 	//Clear back buffer and depth stencil
 	m_D3D->BeginScene(m_clearBackBufferColor);
 
+	m_D3D->EnableAlphaBlending(true);
 	// let our volume renderer do it's thing :)
 	m_volumeRenderer->Render(m_D3D->GetDeviceContext(), m_D3D->m_backFaceCull, m_D3D->m_FrontFaceCull, m_D3D->m_renderTargetView);
+	m_D3D->EnableAlphaBlending(false);
 
 	m_D3D->EndScene();
 	return true;
