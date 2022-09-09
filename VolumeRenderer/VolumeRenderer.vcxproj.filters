@@ -34,6 +34,12 @@
     <Filter Include="Header Files\VolumeRenderer\Shaders">
       <UniqueIdentifier>{3dc71555-b685-4187-bd7c-c46222783e67}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Fluid">
+      <UniqueIdentifier>{7f25e23e-0b45-4cb6-80af-c79473010e67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Fluid">
+      <UniqueIdentifier>{d60e6165-6dd6-49a7-9c7c-dc432085f303}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="System.cpp">
@@ -66,6 +72,9 @@
     <ClCompile Include="RayCastMaterial.cpp">
       <Filter>Source Files\VolumeRenderer\Shaders</Filter>
     </ClCompile>
+    <ClCompile Include="Fluid.cpp">
+      <Filter>Source Files\Fluid</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="System.h">
@@ -95,6 +104,12 @@
     <ClInclude Include="Shader.h">
       <Filter>Header Files\VolumeRenderer\Shaders</Filter>
     </ClInclude>
+    <ClInclude Include="Fluid.h">
+      <Filter>Header Files\Fluid</Filter>
+    </ClInclude>
+    <ClInclude Include="Advection.h">
+      <Filter>Header Files\Fluid</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="model_position.hlsl">
@@ -103,5 +118,40 @@
     <None Include="raycast.hlsl">
       <Filter>Shaders</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="ComputeAdvection.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="ComputeAdvectionMacCormack.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="ComputeBoundaryConditions.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="ComputeBuoyancy.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="ComputeConfinement.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="ComputeDivergence.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="ComputeImpulse.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="ComputeJacobi.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="ComputeMacCormack.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="ComputeProjection.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="ComputeVorticity.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

@@ -2,14 +2,19 @@
 #define VOLUMERENDERER_H_
 
 #include <d3d11.h>
+#include <DirectXMath.h>
+
 #include "Model.h"
 #include "RayCastMaterial.h"
+#include "Fluid.h"
 
 class VolumeRenderer
 {
 public:
-	void Initialize(ID3D11Device* const device, const HWND hwnd, const int width, const int height);
-	void Update(ID3D11Device* const device, const float dt);
+	VolumeRenderer();
+
+	void Initialize(ID3D11Device* const device, ID3D11DeviceContext* const context, const HWND hwnd, const int width, const int height);
+	void Update(ID3D11Device* const device, ID3D11DeviceContext* const context, const float dt);
 	void Render(ID3D11DeviceContext* const deviceContext, ID3D11RasterizerState* const back, ID3D11RasterizerState* const front, ID3D11RenderTargetView* const rtView);
 	void Shutdown();
 	   
@@ -31,6 +36,7 @@ private:
 	// "materials"
 	Model* m_modelShader;
 	RayCastMaterial* m_volumeRaycastShader;
+	Fluid* m_fluid;
 
 	//render textures
 	ID3D11Texture2D* m_modelTex2DFront;
