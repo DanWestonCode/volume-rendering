@@ -320,6 +320,19 @@ bool D3D::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hwnd, b
 	return result;
 }
 
+void D3D::EnableAlphaBlending(bool enabled)
+{
+	float input[4] = { 0,0,0,0 };
+	if (enabled)
+	{
+		m_deviceContext->OMSetBlendState(m_AlphaState, input, 1);
+	}
+	else
+	{
+		m_deviceContext->OMSetBlendState(m_NoAlphaState, input, 1);
+	}
+}
+
 /// <summary>
 ///	Releases all pointers
 /// </summary>

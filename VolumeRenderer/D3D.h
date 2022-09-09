@@ -23,6 +23,8 @@ public:
 	ID3D11DeviceContext* GetDeviceContext() { return m_deviceContext; }
 	ID3D11DepthStencilView* GetDepthStencilView() { return m_depthStencilView; }
 
+	void EnableAlphaBlending(bool enabled);
+
 	void GetProjectionMatrix(DirectX::XMMATRIX& projectionMatrix) const {
 		projectionMatrix = DirectX::XMLoadFloat4x4(&m_projectionMatrix);
 	}
