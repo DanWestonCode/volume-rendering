@@ -26,6 +26,7 @@ private:
 
 	// rotation - y-axis (super lazy but I only want to rotate it on this :P)
 	float rot = 1;
+	DirectX::XMFLOAT4 m_Rot;
 
 	// "materials"
 	Model* m_modelShader;

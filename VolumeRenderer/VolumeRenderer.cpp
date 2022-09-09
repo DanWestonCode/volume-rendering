@@ -46,6 +46,8 @@ void VolumeRenderer::Update(ID3D11Device* const device, const float dt)
 	// rotate rendered volume around y-axis (oo so fancy :P)
 	rot += 1.2f * dt;
 
+	DirectX::XMStoreFloat4(&m_Rot, DirectX::XMQuaternionRotationRollPitchYaw(0, rot, 0));
+
 	// Note: this *does* really suck and please forgive me 
 	if (InputManager::Instance()->IsKeyDown(DIK_1))
 	{
@@ -90,10 +92,10 @@ void VolumeRenderer::Render(ID3D11DeviceContext* const deviceContext, ID3D11Rast
 	// Create our MVP transforms 
 	//-----------------------------------------------------------------------------//
 	DirectX::XMMATRIX scaleMat = DirectX::XMMatrixScaling(1, 1, 1);
-	DirectX::XMMATRIX m_rotationMatrix = DirectX::XMMatrixRotationRollPitchYaw(0, rot, 0);
+	DirectX::XMMATRIX m_rotationMatrix = DirectX::XMMatrixRotationQuaternion(DirectX::XMLoadFloat4(&m_Rot)); //DirectX::XMMatrixRotationRollPitchYaw(0, rot, 0);
 	DirectX::XMMATRIX transMat = DirectX::XMMatrixTranslation(0, 0, 0);
 
-	DirectX::XMMATRIX m_newWorld = scaleMat * m_rotationMatrix*transMat;
+	DirectX::XMMATRIX m_newWorld = scaleMat*m_rotationMatrix*transMat;
 
 	DirectX::XMMATRIX m_worldMatrix = m_newWorld;
 
