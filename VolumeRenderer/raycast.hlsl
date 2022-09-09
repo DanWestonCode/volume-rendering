@@ -45,6 +45,8 @@ struct PSInput
 PSInput RayCastVS(VSInput input)
 {
 	PSInput output;
+	// Change the position vector to be 4 units for proper matrix calculations.
+	input.pos.w = 1.0f;
 	// transform position
 	output.pos = mul(mWVP, input.pos);
 	return output;
@@ -78,7 +80,7 @@ float4 RayCastPS(PSInput input) : SV_TARGET
 	{
 		// sample the texture accumlating the result as we step through the texture
 		float2 src = txVolume.Sample(samplerLinear, v).rr;
-		src.y *= .5f;
+		//src.y *= .5f;
 
 		// Front to back blending
 		result += (1 - result.y)*src.y * src;
