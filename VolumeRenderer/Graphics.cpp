@@ -28,10 +28,8 @@ HRESULT Graphics::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	}
 #pragma endregion
 
-	m_volumeRenderer = new VolumeRenderer();
-	m_volumeRenderer->Initialize(m_D3D->GetDevice(), m_D3D->GetDeviceContext(), hwnd, screenWidth, screenHeight);
-	
-	m_D3D->GetDeviceContext()->OMSetBlendState(m_D3D->m_AlphaState, nullptr, 0xffffffff);
+	m_volumeRenderer = new VolumeRenderer;
+	m_volumeRenderer->Initialize(m_D3D->GetDevice(), hwnd, screenWidth, screenHeight);
 
 	return result;
 }
@@ -73,7 +71,7 @@ bool Graphics::Frame(float dt)
 
 void Graphics::Update(float dt)
 {
-	m_volumeRenderer->Update(m_D3D->GetDevice(), m_D3D->GetDeviceContext(),  dt);
+	m_volumeRenderer->Update(m_D3D->GetDevice(), dt);
 }
 
 bool Graphics::Render(float dt)

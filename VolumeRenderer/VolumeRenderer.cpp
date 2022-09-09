@@ -6,34 +6,8 @@
 const UINT g_iVolumeSize = 256;	// voxel volume width, height and depth
 const UINT g_vol = 178;
 
-VolumeRenderer::VolumeRenderer()
+void VolumeRenderer::Initialize(ID3D11Device* const device, const HWND hwnd, const int width, const int height)
 {
-	m_modelShader = nullptr;
-	m_volumeRaycastShader = nullptr;
-	m_fluid = nullptr;
-	//render textures
-	m_modelTex2DFront = nullptr;
-	m_modelSRVFront = nullptr;
-	m_modelRTVFront = nullptr;
-	m_modelText2DBack = nullptr;
-	m_modelRSVBack = nullptr;
-	m_ModelRTVBack = nullptr;
-	//sampler 
-	m_samplerLinear = nullptr;
-	//volume texture
-	m_volumeTex3D = nullptr;
-	m_volRSV = nullptr;
-	//vertex and index buffers
-	m_cubeVB = nullptr;
-	m_cubeIB = nullptr;
-}
-
-void VolumeRenderer::Initialize(ID3D11Device* const device, ID3D11DeviceContext* const context, const HWND hwnd, const int width, const int height)
-{
-	m_fluid = new Fluid();
-	m_fluid->Initialize(64, device, context, hwnd);
-	m_fluid->Clear(context);
-
 	// set up the shader/"material" to render the cube (the volume which the texture will mapped too)
 	m_modelShader = new Model;
 	m_modelShader->Initialize(device, hwnd);
@@ -49,7 +23,7 @@ void VolumeRenderer::Initialize(ID3D11Device* const device, ID3D11DeviceContext*
 	CreateSampler(device);
 
 	// load of the raw textures into a D3D11_TEXTURE3D_DESC 
-	LoadVolume(device, L"../VolumeRenderer/male.raw");	
+	LoadVolume(device, L"../VolumeRenderer/foot.raw");	
 
 	// create the volume/cube primitive
 	CreateCube(device);
@@ -67,9 +41,8 @@ void VolumeRenderer::Initialize(ID3D11Device* const device, ID3D11DeviceContext*
 	XMStoreFloat4x4(&viewProj, XMMatrixMultiply(mProjection, mView));
 }
 
-void VolumeRenderer::Update(ID3D11Device* const device, ID3D11DeviceContext* const context, const float dt)
+void VolumeRenderer::Update(ID3D11Device* const device, const float dt)
 {
-	m_fluid->Run(dt, context);
 	// rotate rendered volume around y-axis (oo so fancy :P)
 	rot += 1.2f * dt;
 
@@ -96,18 +69,6 @@ void VolumeRenderer::Update(ID3D11Device* const device, ID3D11DeviceContext* con
 		LoadVolume(device, L"../VolumeRenderer/foot.raw");
 	}
 
-	if (InputManager::Instance()->IsKeyDown(DIK_4))
-	{
-		LoadVolume(device, L"../VolumeRenderer/foot.raw");
-	}
-
-	if (InputManager::Instance()->IsKeyDown(DIK_4))
-	{
-		
-		//m_fluid->Clear((m_D3D->GetDeviceContext()));
-
-		m_volRSV = m_fluid->m_DensitySRV[0];
-	}	
 }
 
 void VolumeRenderer::Render(ID3D11DeviceContext* const deviceContext, ID3D11RasterizerState* const back, ID3D11RasterizerState* const front, ID3D11RenderTargetView* const rtView)
@@ -201,91 +162,59 @@ void VolumeRenderer::Render(ID3D11DeviceContext* const deviceContext, ID3D11Rast
 void VolumeRenderer::Shutdown()
 {
 	// release all our resources
-	if (m_modelTex2DFront != nullptr)
-	{
+	if (m_modelTex2DFront != nullptr) {
 		m_modelTex2DFront->Release();
 		m_modelTex2DFront = nullptr;
 	}
 
-	if (m_modelSRVFront != nullptr)
-	{
+	if (m_modelSRVFront != nullptr) {
 		m_modelSRVFront->Release();
 		m_modelSRVFront = nullptr;
 	}
 
-	if (m_modelRTVFront != nullptr)
-	{
+	if (m_modelRTVFront != nullptr) {
 		m_modelRTVFront->Release();
 		m_modelRTVFront = nullptr;
 	}
 
-	if (m_modelText2DBack != nullptr)
-	{
+	if (m_modelText2DBack != nullptr) {
 		m_modelText2DBack->Release();
 		m_modelText2DBack = nullptr;
 	}
 
-	if (m_modelRSVBack != nullptr)
-	{
+	if (m_modelRSVBack != nullptr) {
 		m_modelRSVBack->Release();
 		m_modelRSVBack = nullptr;
 	}
 
-	if (m_ModelRTVBack != nullptr)
-	{
+	if (m_ModelRTVBack != nullptr) {
 		m_ModelRTVBack->Release();
 		m_ModelRTVBack = nullptr;
 	}
 
-	if (m_samplerLinear != nullptr)
-	{
+	if (m_samplerLinear != nullptr) {
 		m_samplerLinear->Release();
 		m_samplerLinear = nullptr;
 	}
 
-	if (m_volumeTex3D != nullptr)
-	{
+	if (m_volumeTex3D != nullptr) {
 		m_volumeTex3D->Release();
 		m_volumeTex3D = nullptr;
 	}
 
-	if (m_volRSV != nullptr) 
-	{
+	if (m_volRSV != nullptr) {
 		m_volRSV->Release();
 		m_volRSV = nullptr;
 	}
 
-	if (m_cubeVB != nullptr) 
-	{
+	if (m_cubeVB != nullptr) {
 		m_cubeVB->Release();
 		m_cubeVB = nullptr;
 	}
 
-	if (m_cubeIB != nullptr) 
-	{
+	if (m_cubeIB != nullptr) {
 		m_cubeIB->Release();
 		m_cubeIB = nullptr;
-	}
-
-	if (m_volumeRaycastShader != nullptr)
-	{
-		m_volumeRaycastShader->Shutdown();
-		delete m_volumeRaycastShader;
-		m_volumeRaycastShader = nullptr;
-	}
-
-	if (m_modelShader != nullptr)
-	{
-		m_modelShader->Shutdown();
-		delete m_modelShader;
-		m_modelShader = nullptr;
-	}
-
-	if (m_fluid != nullptr)
-	{
-		m_fluid->Shutdown();
-		delete m_fluid;
-		m_fluid = nullptr;
 	}
 }
 

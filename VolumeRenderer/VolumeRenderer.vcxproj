@@ -125,7 +125,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="D3D.cpp" />
-    <ClCompile Include="Fluid.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Model.cpp" />
@@ -137,9 +136,7 @@
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Advection.h" />
     <ClInclude Include="D3D.h" />
-    <ClInclude Include="Fluid.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Model.h" />
@@ -156,41 +153,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="raycast.hlsl">
-      <FileType>Document</FileType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ComputeAdvection.hlsl">
-      <FileType>Document</FileType>
-    </None>
-    <None Include="ComputeAdvectionMacCormack.hlsl">
-      <FileType>Document</FileType>
-    </None>
-    <None Include="ComputeBoundaryConditions.hlsl">
-      <FileType>Document</FileType>
-    </None>
-    <None Include="ComputeBuoyancy.hlsl">
-      <FileType>Document</FileType>
-    </None>
-    <None Include="ComputeConfinement.hlsl">
-      <FileType>Document</FileType>
-    </None>
-    <None Include="ComputeDivergence.hlsl">
-      <FileType>Document</FileType>
-    </None>
-    <None Include="ComputeImpulse.hlsl">
-      <FileType>Document</FileType>
-    </None>
-    <None Include="ComputeJacobi.hlsl">
-      <FileType>Document</FileType>
-    </None>
-    <None Include="ComputeMacCormack.hlsl">
-      <FileType>Document</FileType>
-    </None>
-    <None Include="ComputeProjection.hlsl">
-      <FileType>Document</FileType>
-    </None>
-    <None Include="ComputeVorticity.hlsl">
       <FileType>Document</FileType>
     </None>
   </ItemGroup>
